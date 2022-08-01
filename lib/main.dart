@@ -24,8 +24,12 @@ class Hayyacom extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Hayyacom',
         defaultTransition: Transition.rightToLeft,
+        // translations: JPTranslations(),
         locale: const Locale('en', 'US'),
+        getPages: AppPages.pages,
+        initialRoute: Routes.login
       )
+      // initialRoute: isUserLoggedIn == null ? Routes.login : Routes.home);
     );
   }
 }
