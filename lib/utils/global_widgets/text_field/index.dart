@@ -13,9 +13,11 @@ class TextFieldWidget extends StatelessWidget {
   final String? hintText;
   final Color? hintTextColor;
   final String? labelText;
+  final bool? obscureText;
   final Color? labelTextColor;
   final TextInputType? keyboardType;
   final FormFieldValidator<String>? validator;
+  final FormFieldValidator<String>? onSaved;
   final VoidCallback? onSuffixIconTap;
 
 
@@ -32,15 +34,21 @@ class TextFieldWidget extends StatelessWidget {
     this.hintTextColor,
     this.labelText,
     this.labelTextColor,
+    this.obscureText,
     this.keyboardType,
     this.validator,
+    this.onSaved,
     this.onSuffixIconTap,}) : super(key: key);
 
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-        controller: controller,
+      controller: controller,
+      keyboardType: keyboardType ?? TextInputType.text,
+      validator: validator,
+      onSaved: onSaved,
+      obscureText: obscureText ?? false,
       decoration: InputDecoration(
         prefixIcon: Icon(
           prefixIcon,
@@ -52,22 +60,25 @@ class TextFieldWidget extends StatelessWidget {
         hintStyle: TextStyle(
           color: hintTextColor ?? AppTheme.themeColors.darkGray,
         ),
-        suffixIcon: Material(
-          child: InkWell(
-            onTap: onSuffixIconTap,
-            child: Icon(
-              suffixIcon,
-              color: suffixIconColor ?? AppTheme.themeColors.darkGray,
-              size:  suffixIconSize ?? 25,
-            ),
-          ),
-        ),
+        suffixIcon: suffixIcon != null
+          ? Material(
+              color: AppTheme.themeColors.base,
+              child: InkWell(
+                onTap: onSuffixIconTap,
+                borderRadius: BorderRadius.circular(20),
+                child: Icon(
+                  suffixIcon,
+                  color: suffixIconColor ?? AppTheme.themeColors.darkGray,
+                  size:  suffixIconSize ?? 25,
+                ),
+              ),
+            )
+            : null,
       ),
       style: TextStyle(
         color: labelTextColor ?? AppTheme.themeColors.darkGray,
       ),
-      keyboardType: keyboardType ?? TextInputType.text,
-      validator: validator
+
     );
   }
 }

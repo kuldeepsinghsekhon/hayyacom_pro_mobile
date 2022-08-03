@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hayyacom/utils/utils.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class LoginView extends StatelessWidget {
+import 'controller.dart';
+
+class LoginView extends GetView<LoginController> {
   const LoginView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return GetBuilder<LoginController>(builder: (_) =>
+    Scaffold(
       backgroundColor: AppTheme.themeColors.base,
       body: SafeArea(
         child: Padding(
@@ -28,20 +32,14 @@ class LoginView extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(bottom: 3.h),
+                    padding: EdgeInsets.only(bottom: 5.h),
                     child: TextWidget.bold(
                       text: "Hayyacom",
                       fontSize: 10.h,
                     ),
                   ),
-                ],
-              ),
-
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
                   Padding(
-                    padding: EdgeInsets.only(bottom: 1.h),
+                    padding: EdgeInsets.only(bottom: 2.h),
                     child: TextWidget.normal(
                       text: "Login as a تسجيل الدخول",
                       fontSize: 3.h,
@@ -53,84 +51,104 @@ class LoginView extends StatelessWidget {
                       Expanded(
                         flex: 33,
                         child: Button(
-                          onTap: () {},
-                          color: AppTheme.themeColors.darkGray,
+                          onTap: () => controller.updateSelectedUser(1),
+                          color: controller.selectedUser == 1
+                              ? AppTheme.themeColors.darkGray
+                              : AppTheme.themeColors.dimGray,
                           title: "Receptionist\nموظف",
                           titleSize: 2.h,
-                          titleColor: AppTheme.themeColors.base,
+                          titleColor: controller.selectedUser == 1
+                              ? AppTheme.themeColors.base
+                              : AppTheme.themeColors.text,
                         ),
                       ),
                       const Spacer(),
                       Expanded(
                         flex: 33,
                         child: Button(
-                          onTap: () {},
-                          color: AppTheme.themeColors.dimGray,
+                          onTap: () => controller.updateSelectedUser(2),
+                          color: controller.selectedUser == 2
+                              ? AppTheme.themeColors.darkGray
+                              : AppTheme.themeColors.dimGray,
                           title: "Inviter\nصاحب المناسبة",
                           titleSize: 2.h,
-                          titleColor: AppTheme.themeColors.text,
+                          titleColor: controller.selectedUser == 2
+                              ? AppTheme.themeColors.base
+                              : AppTheme.themeColors.text,
                         ),
                       ),
                       const Spacer(),
                       Expanded(
                         flex: 33,
                         child: Button(
-                          onTap: () {},
-                          color: AppTheme.themeColors.dimGray,
+                          onTap: () => controller.updateSelectedUser(3),
+                          color: controller.selectedUser == 3
+                              ? AppTheme.themeColors.darkGray
+                              : AppTheme.themeColors.dimGray,
                           title: "Hayyacom\nصاحب المناسبة",
                           titleSize: 2.h,
-                          titleColor: AppTheme.themeColors.text,
+                          titleColor: controller.selectedUser == 3
+                              ? AppTheme.themeColors.base
+                              : AppTheme.themeColors.text,
                         ),
                       ),
                     ],
                   ),
+
                 ],
               ),
 
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.only(bottom: 10.0),
-                    child: TextFieldWidget(
-                      // controller: phoneController,
-                      prefixIcon: Icons.phone_android,
-                      labelText: "Mobile Number رقم الهاتف المحمول",
-                      hintText: "Mobile Number رقم الهاتف المحمول",
-                      // validator: validatePhoneNumber,
+              Form(
+                key: controller.formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 10.0),
+                      child: TextFieldWidget(
+                        prefixIcon: Icons.phone_android,
+                        labelText: "Mobile Number رقم الهاتف المحمول",
+                        hintText: "0000000000",
+                        validator: FormValidation.phoneValidation,
+                        onSaved: (val) => controller.phoneNo = val?.trim() ?? "",
+                      ),
                     ),
-                  ),
 
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10.0),
-                    child: TextFieldWidget(
-                      // controller: phoneController,
-                      prefixIcon: Icons.lock,
-                      suffixIcon: true
-                          ? Icons.visibility_off
-                          : Icons.visibility,
-                      labelText: "Password كلمه السر",
-                      hintText: "Password كلمه السر",
-                      // validator: validatePhoneNumber,
-                      onSuffixIconTap: () {},
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 10.0),
+                      child: TextFieldWidget(
+                        prefixIcon: Icons.lock,
+                        suffixIcon: !controller.isPasswordVisible
+                            ? Icons.visibility_off
+                            : Icons.visibility,
+                        labelText: "Password كلمه السر",
+                        hintText: "********",
+                        obscureText: controller.isPasswordVisible,
+                        validator: FormValidation.passwordValidation,
+                        onSaved: (val) => controller.password = val?.trim() ?? "",
+                        onSuffixIconTap: () => controller.updatePasswordVisibility(),
+                      ),
                     ),
-                  ),
 
-                  const Padding(
-                    padding: EdgeInsets.only(bottom: 10.0),
-                    child: TextFieldWidget(
-                      // controller: phoneController,
-                      prefixIcon: Icons.event,
-                      labelText: "Event Id رقم الحفله",
-                      hintText: "Event Id رقم الحفله",
-                      // validator: validatePhoneNumber,
+                    Visibility(
+                      visible: controller.selectedUser == 2,
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 10.0),
+                        child: TextFieldWidget(
+                          prefixIcon: Icons.event,
+                          labelText: "Event Id رقم الحفله",
+                          hintText: "00",
+                          validator: FormValidation.eventValidation,
+                          onSaved: (val) => controller.eventId = val?.trim() ?? "",
+                        ),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
 
               Button(
-                onTap: () {},
+                onTap: () => controller.validate(),
                 color: AppTheme.themeColors.darkGray,
                 buttonSize: 7.h,
                 title: "Login",
@@ -141,6 +159,6 @@ class LoginView extends StatelessWidget {
           ),
         )
       ),
-    );
+    ));
   }
 }
