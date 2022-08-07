@@ -24,17 +24,22 @@ class Button extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
+      color: color ?? AppTheme.themeColors.dimGray,
+      type: MaterialType.button,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(20),
+        onLongPress: (){},
+        splashColor: AppTheme.themeColors.dimGray,
+        customBorder: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
         child: Container(
           height: buttonSize,
           alignment: Alignment.center,
           padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration (
-              color: color ?? AppTheme.themeColors.dimGray,
-              borderRadius: BorderRadius.circular(20)
-          ),
           child: TextWidget.bold(
             text: title ?? "Submit",
             fontSize: titleSize ?? 2.h,
