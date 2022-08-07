@@ -2,12 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:hayyacom/utils/shared_preferences/index.dart';
 import 'package:hayyacom/utils/utils.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import 'utils/routes/pages.dart';
 
-void main() {
+dynamic isUserLoggedIn;
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  isUserLoggedIn = await PreferencesHandler.getUserName();
   runApp(const Hayyacom());
 }
 
@@ -25,13 +30,11 @@ class Hayyacom extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Hayyacom',
         defaultTransition: Transition.rightToLeft,
-        // translations: JPTranslations(),
         locale: const Locale('en', 'US'),
         getPages: AppPages.pages,
-        initialRoute: Routes.login,
+        initialRoute: isUserLoggedIn == null ? Routes.login : Routes.newInviter,
         builder: EasyLoading.init(),
       )
-      // initialRoute: isUserLoggedIn == null ? Routes.login : Routes.home);
     );
   }
 }

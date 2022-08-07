@@ -8,4 +8,5 @@ class APIUrls {
 
   static String oldLoginApi =  "$oldAppBaseURL/api/login";
   static String newLoginApi =  "$newAppBaseURL/auth/login";
+  static eventListApi(int id) => "$newAppBaseURL/events/user/$id";
 }

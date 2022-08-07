@@ -29,4 +29,16 @@ class APICallHandler {
       .timeout(timeOut, onTimeout: () => onTimeOut);
   }
 
+  Future<ApiResponse> getRequest(String url) {
+    return http.get(Uri.parse(url), headers: headers).then((value) {
+      if(value.statusCode == success) {
+        return ApiResponse(status: true, data: json.decode(value.body));
+      } else {
+        return ApiResponse(status: false, message: (json.decode(value.body).toString()));
+      }
+    }).onError((error, stackTrace) => onCatchError(error))
+        .catchError((onError) => onCatchError(onError))
+        .timeout(timeOut, onTimeout: () => onTimeOut);
+  }
+
 }

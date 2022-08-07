@@ -50,10 +50,10 @@ class TextFieldWidget extends StatelessWidget {
       onSaved: onSaved,
       obscureText: obscureText ?? false,
       decoration: InputDecoration(
-        prefixIcon: Icon(
-          prefixIcon,
-          color: prefixIconColor ?? AppTheme.themeColors.darkGray,
-          size: prefixIconSize ?? 25,
+        prefixIcon: IconButtonWidget(
+          icon: prefixIcon,
+          iconColor: prefixIconColor,
+          iconSize: prefixIconSize,
         ),
         hintText: hintText,
         labelText: labelText,
@@ -61,19 +61,12 @@ class TextFieldWidget extends StatelessWidget {
           color: hintTextColor ?? AppTheme.themeColors.darkGray,
         ),
         suffixIcon: suffixIcon != null
-          ? Material(
-              color: AppTheme.themeColors.base,
-              child: InkWell(
-                onTap: onSuffixIconTap,
-                borderRadius: BorderRadius.circular(20),
-                child: Icon(
-                  suffixIcon,
-                  color: suffixIconColor ?? AppTheme.themeColors.darkGray,
-                  size:  suffixIconSize ?? 25,
-                ),
-              ),
-            )
-            : null,
+          ? IconButtonWidget(
+              onTap: onSuffixIconTap,
+              icon: suffixIcon,
+              iconColor: suffixIconColor,
+              iconSize: suffixIconSize,
+            ) : null,
       ),
       style: TextStyle(
         color: labelTextColor ?? AppTheme.themeColors.darkGray,

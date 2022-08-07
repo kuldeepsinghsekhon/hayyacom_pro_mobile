@@ -104,7 +104,7 @@ class LoginView extends GetView<LoginController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(bottom: 10.0),
+                      padding: const EdgeInsets.only(bottom: 10.0),
                       child: TextFieldWidget(
                         prefixIcon: Icons.phone_android,
                         labelText: "Mobile Number رقم الهاتف المحمول",
