@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hayyacom/repositories/login.dart';
+import 'package:hayyacom/utils/utils.dart';
 
 class LoginController extends GetxController {
 
@@ -21,6 +23,7 @@ class LoginController extends GetxController {
     if(formKey.currentState?.validate() ?? false) {
       formKey.currentState!.save();
       updateLoading();
+      login();
       // onDelete(CustomerModel(id: id, password: password, note: note));
     }
   }
@@ -33,6 +36,27 @@ class LoginController extends GetxController {
   void updatePasswordVisibility () {
     isPasswordVisible = !isPasswordVisible;
     update();
+  }
+
+  void login() {
+    showLoader();
+    LoginRepository.login(
+      phone: phoneNo,
+      password: password,
+      eventId: eventId,
+      selectedUser: selectedUser).then((value) {
+        Get.back();
+        if(value.status) {
+          showToast("Login Successfully");
+          navigateToInviterScreen();
+        } else {
+          showToast(value.message ?? "");
+        }
+    });
+  }
+
+  void navigateToInviterScreen() {
+    Get.toNamed(Routes.newInviter);
   }
 
 }

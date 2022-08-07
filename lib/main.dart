@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:hayyacom/utils/utils.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -27,7 +28,8 @@ class Hayyacom extends StatelessWidget {
         // translations: JPTranslations(),
         locale: const Locale('en', 'US'),
         getPages: AppPages.pages,
-        initialRoute: Routes.login
+        initialRoute: Routes.login,
+        builder: EasyLoading.init(),
       )
       // initialRoute: isUserLoggedIn == null ? Routes.login : Routes.home);
     );

@@ -131,7 +131,7 @@ class LoginView extends GetView<LoginController> {
                     ),
 
                     Visibility(
-                      visible: controller.selectedUser == 2,
+                      visible: controller.selectedUser == 1,
                       child: Padding(
                         padding: const EdgeInsets.only(bottom: 10.0),
                         child: TextFieldWidget(

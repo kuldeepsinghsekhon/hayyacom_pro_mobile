@@ -2,7 +2,7 @@ class FormValidation {
   static String? phoneValidation(String? number) {
     if(number?.trim().isEmpty ?? false) {
       return "Please provide phone number";
-    } else if ((number?.trim().length ?? 0) < 10) {
+    } else if ((number?.trim().length ?? 0) < 9) {
       return "Please provide valid phone number";
     } else {
       return null;

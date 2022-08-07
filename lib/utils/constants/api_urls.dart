@@ -1,9 +1,11 @@
 class APIUrls {
   ///   Live
-  static const String baseURL = 'https://hayyacom.net/QRscannerapp';
+  static const String oldAppBaseURL = 'https://hayyacom.net/QRscannerapp';
+  static const String newAppBaseURL = 'https://hayyacom.net/mobile/api';
   ///  Testing
 //   static const String baseURL = 'http://aquatecinnovative.co.in:3001';
 //   static const String baseURL = 'https://qrscanner.aquatecinnovative.co.in/';
 
-  static String loginApi =  "$baseURL/api/login";
+  static String oldLoginApi =  "$oldAppBaseURL/api/login";
+  static String newLoginApi =  "$newAppBaseURL/auth/login";
 }
