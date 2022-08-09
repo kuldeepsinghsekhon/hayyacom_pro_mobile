@@ -1,8 +1,10 @@
 import 'package:get/get.dart';
 import 'package:hayyacom/screens/login/binding.dart';
 import 'package:hayyacom/screens/login/page.dart';
-import 'package:hayyacom/screens/new_inviter/binding.dart';
-import 'package:hayyacom/screens/new_inviter/page.dart';
+import 'package:hayyacom/screens/new_inviter/contact_list/binding.dart';
+import 'package:hayyacom/screens/new_inviter/contact_list/page.dart';
+import 'package:hayyacom/screens/new_inviter/event_list/binding.dart';
+import 'package:hayyacom/screens/new_inviter/event_list/page.dart';
 
 import 'routes.dart';
 
@@ -14,9 +16,14 @@ abstract class AppPages {
       binding: LoginBinding(),
     ),
     GetPage(
-      name: Routes.newInviter,
-      page: () => const NewInviterView(),
-      binding: NewInviterBinding(),
+      name: Routes.eventListing,
+      page: () => const EventListingView(),
+      binding: EventListingBinding(),
+    ),
+    GetPage(
+      name: Routes.contactListing,
+      page: () => const ContactListingView(),
+      binding: ContactListingBinding(),
     ),
   ];
 }

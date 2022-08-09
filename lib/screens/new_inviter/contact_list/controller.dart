@@ -2,30 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hayyacom/models/event_model.dart';
 import 'package:hayyacom/repositories/events.dart';
+import 'package:hayyacom/utils/constants/navigation_params.dart';
 import 'package:hayyacom/utils/shared_preferences/index.dart';
 import 'package:hayyacom/utils/utils.dart';
 
-class NewInviterController extends GetxController {
+class ContactListingController extends GetxController {
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   String name = "";
+
+  EventModel? eventModel;
 
   List<EventModel>? eventsList;
 
   @override
   void onInit() {
     super.onInit();
-    PreferencesHandler.getUserName().then((dynamic value) {
-      name = value.toString().capitalize!;
-      update();
-    });
-    fetchEvents();
+    eventModel = Get.arguments[NavigationParams.eventModel];
   }
 
   void fetchEvents() {
     PreferencesHandler.getUserId().then((dynamic id) =>
-      EventsRepository.getEventsList(id).then((value) {
+      EventsRepository.getEventsList(1).then((value) {
         if(value.status) {
           eventsList = value.data;
           update();
@@ -35,6 +34,10 @@ class NewInviterController extends GetxController {
           update();
         }
       }));
+  }
+
+  void navigateToContactList() {
+
   }
 
 }

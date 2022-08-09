@@ -1,4 +1,5 @@
 abstract class Routes {
   static const login = '/login';
-  static const newInviter = '/newInviter';
+  static const eventListing = '/eventListing';
+  static const contactListing = '/contactListing';
 }

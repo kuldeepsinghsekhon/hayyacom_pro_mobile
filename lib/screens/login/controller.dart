@@ -56,7 +56,7 @@ class LoginController extends GetxController {
   }
 
   void navigateToInviterScreen() {
-    Get.toNamed(Routes.newInviter);
+    Get.toNamed(Routes.eventListing);
   }
 
 }

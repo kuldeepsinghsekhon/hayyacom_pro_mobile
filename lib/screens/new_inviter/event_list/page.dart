@@ -5,12 +5,12 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 
 import 'controller.dart';
 
-class NewInviterView extends GetView<NewInviterController> {
-  const NewInviterView({Key? key}) : super(key: key);
+class EventListingView extends GetView<EventListingController> {
+  const EventListingView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<NewInviterController>(builder: (_) =>
+    return GetBuilder<EventListingController>(builder: (_) =>
     Scaffold(
       backgroundColor: AppTheme.themeColors.base,
       body: SafeArea(
@@ -58,16 +58,19 @@ class NewInviterView extends GetView<NewInviterController> {
                   shrinkWrap: true,
                   itemCount: controller.eventsList?.length ?? 6,
                   itemBuilder: (BuildContext context, int index) => CardWidget(
-                    onTap: () {},
+                    onTap: () => controller.navigateToContactList(controller.eventsList![index]),
                     child: ListTile(
                       leading: CircleAvatar(
                         radius: 3.h,
                         backgroundColor: AppTheme.themeColors.darkGray,
-                        child: TextWidget.normal(text: (index + 1).toString()),
+                        child: TextWidget.bold(
+                          text: (index + 1).toString(),
+                          color: AppTheme.themeColors.base,
+                        ),
                       ),
                       title: Row(
                         children: [
-                          const TextWidget.normal(text: "Event dated - "),
+                          TextWidget.normal(text: "${controller.eventsList?[index].type} - "),
                           TextWidget.bold(
                             text: controller.eventsList?[index].eventDate ?? ""),
                         ],
