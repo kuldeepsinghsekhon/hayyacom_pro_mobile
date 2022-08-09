@@ -5,6 +5,7 @@ import '../../utils.dart';
 class IconButtonWidget extends StatelessWidget {
 
   final VoidCallback? onTap;
+  final Color? backgroundColor;
   final IconData? icon;
   final Color? iconColor;
   final double? iconSize;
@@ -12,6 +13,7 @@ class IconButtonWidget extends StatelessWidget {
   const IconButtonWidget({
     Key? key,
     this.onTap,
+    this.backgroundColor,
     this.icon,
     this.iconColor,
     this.iconSize}) : super(key: key);
@@ -19,7 +21,7 @@ class IconButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: AppTheme.themeColors.base,
+      color: backgroundColor ?? AppTheme.themeColors.base,
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(20),

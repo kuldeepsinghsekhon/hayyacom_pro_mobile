@@ -56,7 +56,7 @@ class EventListingView extends GetView<EventListingController> {
                 : Flexible(
                 child: ListView.separated(
                   shrinkWrap: true,
-                  itemCount: controller.eventsList?.length ?? 6,
+                  itemCount: controller.eventsList?.length ?? 0,
                   itemBuilder: (BuildContext context, int index) => CardWidget(
                     onTap: () => controller.navigateToContactList(controller.eventsList![index]),
                     child: ListTile(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:get/get.dart';
 import 'package:hayyacom/models/event_model.dart';
 import 'package:hayyacom/repositories/events.dart';
@@ -10,30 +11,28 @@ class ContactListingController extends GetxController {
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  String name = "";
-
   EventModel? eventModel;
 
-  List<EventModel>? eventsList;
+  List<Contact>? contacts;
+
+  bool isPermissionDenied = false;
+  bool isLoading = true;
 
   @override
   void onInit() {
     super.onInit();
     eventModel = Get.arguments[NavigationParams.eventModel];
+    fetchContacts();
   }
 
-  void fetchEvents() {
-    PreferencesHandler.getUserId().then((dynamic id) =>
-      EventsRepository.getEventsList(1).then((value) {
-        if(value.status) {
-          eventsList = value.data;
-          update();
-        } else {
-          eventsList = [];
-          showToast(value.message ?? "");
-          update();
-        }
-      }));
+  Future fetchContacts() async {
+    if (!await FlutterContacts.requestPermission(readonly: true)) {
+      isPermissionDenied = true;
+    } else {
+      contacts = await FlutterContacts.getContacts();
+    }
+    isLoading = false;
+    update();
   }
 
   void navigateToContactList() {

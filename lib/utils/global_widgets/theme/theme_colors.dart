@@ -35,6 +35,7 @@ class ThemeColors {
   Color lightPurple;
   Color  uranianBlue;
   Color cornFlowerBlue;
+  Color transparent;
 
   ThemeColors.light({
     this.base = AppColors.white,
@@ -69,7 +70,8 @@ class ThemeColors {
     this.oliveGreen = AppColors.oliveGreen,
     this.darkYellow = AppColors.darkYellow,
     this.cornFlowerBlue = AppColors.cornflowerBlue,
-    this.uranianBlue = AppColors.uranianBlue
+    this.uranianBlue = AppColors.uranianBlue,
+    this.transparent = AppColors.transparent,
   });
 
   ThemeColors.dark({
@@ -105,6 +107,7 @@ class ThemeColors {
     this.oliveGreen = AppColors.oliveGreen,
     this.darkYellow = AppColors.darkYellow,
     this.cornFlowerBlue = AppColors.cornflowerBlue,
-    this.uranianBlue = AppColors.uranianBlue
+    this.uranianBlue = AppColors.uranianBlue,
+    this.transparent = AppColors.transparent,
   });
 }
