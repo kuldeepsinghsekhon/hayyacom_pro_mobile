@@ -22,12 +22,24 @@ class EventListingView extends GetView<EventListingController> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 1.h),
-                    child: TextWidget.bold(
-                      text: "Welcome",
-                      fontSize: 5.h,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                      padding: EdgeInsets.only(bottom: 1.h),
+                      child: TextWidget.bold(
+                        text: "Welcome",
+                        fontSize: 5.h,
+                      ),
                     ),
+                      IconButtonWidget(
+                        onTap: () => controller.logOut(),
+                        icon: Icons.logout,
+                        iconColor: AppTheme.themeColors.text,
+                        iconSize: 24,
+                      ),
+                    ],
                   ),
                   Padding(
                     padding: EdgeInsets.only(bottom: 5.h),

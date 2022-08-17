@@ -32,7 +32,7 @@ class Hayyacom extends StatelessWidget {
         defaultTransition: Transition.rightToLeft,
         locale: const Locale('en', 'US'),
         getPages: AppPages.pages,
-        initialRoute: isUserLoggedIn == null ? Routes.login : Routes.eventListing,
+        initialRoute: isUserLoggedIn == null ? Routes.userSelection : Routes.eventListing,
         builder: EasyLoading.init(),
       )
     );

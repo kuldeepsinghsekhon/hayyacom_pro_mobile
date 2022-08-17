@@ -21,13 +21,13 @@ class IconButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: backgroundColor ?? AppTheme.themeColors.base,
+      color: backgroundColor ?? AppTheme.themeColors.transparent,
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(20),
         child: Icon(
           icon,
-          color: iconColor ?? AppTheme.themeColors.darkGray,
+          color: iconColor ?? AppTheme.themeColors.text,
           size:  iconSize ?? 25,
         ),
       ),

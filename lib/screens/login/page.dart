@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hayyacom/utils/constants/assets_images.dart';
+import 'package:hayyacom/utils/enums/user_types.dart';
+import 'package:hayyacom/utils/global_widgets/background.dart';
 import 'package:hayyacom/utils/utils.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -10,154 +13,128 @@ class LoginView extends GetView<LoginController> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<LoginController>(builder: (_) =>
-    Scaffold(
-      backgroundColor: AppTheme.themeColors.base,
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.all(3.w),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 1.h),
-                    child: TextWidget.bold(
-                      text: "Welcome",
-                      fontSize: 5.h,
+    return GetBuilder<LoginController>(builder: (_) => BackgroundWidget(
+      child: Stack(
+        alignment: Alignment.topCenter,
+        children: [
+          ///   Body
+          Container(
+            margin: const EdgeInsets.only(top: 30),
+            padding: EdgeInsets.all(3.w),
+            decoration: BoxDecoration(
+                color: AppTheme.themeColors.base.withOpacity(0.55),
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(
+                    width: 1,
+                    color: AppTheme.themeColors.secondary
+                )
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    IconButtonWidget(
+                      onTap: () => Get.back(),
+                      icon: Icons.arrow_back,
+                      iconColor: AppTheme.themeColors.text,
+                      iconSize: 24,
                     ),
+                  ],
+                ),
+                Padding(
+                  padding: EdgeInsets.only(bottom: 1.h),
+                  child: TextWidget.bold(
+                    text: "Log in as ${User.getEnUserType(controller.userType!)}",
+                    fontSize: 2.5.h,
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 5.h),
-                    child: TextWidget.bold(
-                      text: "Hayyacom",
-                      fontSize: 10.h,
-                    ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(bottom: 5.h),
+                  child: TextWidget.bold(
+                    text: "تسجيل الدخول ${User.getArUserType(controller.userType!)}",
+                    fontSize: 2.5.h,
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 2.h),
-                    child: TextWidget.normal(
-                      text: "Login as a تسجيل الدخول",
-                      fontSize: 3.h,
-                    ),
-                  ),
-
-                  Row(
+                ),
+                Form(
+                  key: controller.formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(
-                        flex: 33,
-                        child: Button(
-                          onTap: () => controller.updateSelectedUser(1),
-                          color: controller.selectedUser == 1
-                              ? AppTheme.themeColors.darkGray
-                              : AppTheme.themeColors.dimGray,
-                          title: "Receptionist\nموظف",
-                          titleSize: 2.h,
-                          titleColor: controller.selectedUser == 1
-                              ? AppTheme.themeColors.base
-                              : AppTheme.themeColors.text,
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10.0),
+                        child: TextFieldWidget(
+                          prefixIcon: Icons.phone_android,
+                          labelText: "Mobile Number رقم الهاتف المحمول",
+                          hintText: "0000000000",
+                          validator: FormValidation.phoneValidation,
+                          onSaved: (val) => controller.phoneNo = val?.trim() ?? "",
                         ),
                       ),
-                      const Spacer(),
-                      Expanded(
-                        flex: 33,
-                        child: Button(
-                          onTap: () => controller.updateSelectedUser(2),
-                          color: controller.selectedUser == 2
-                              ? AppTheme.themeColors.darkGray
-                              : AppTheme.themeColors.dimGray,
-                          title: "Inviter\nصاحب المناسبة",
-                          titleSize: 2.h,
-                          titleColor: controller.selectedUser == 2
-                              ? AppTheme.themeColors.base
-                              : AppTheme.themeColors.text,
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10.0),
+                        child: TextFieldWidget(
+                          prefixIcon: Icons.lock,
+                          suffixIcon: !controller.isPasswordVisible
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          labelText: "Password كلمه السر",
+                          hintText: "********",
+                          obscureText: controller.isPasswordVisible,
+                          validator: FormValidation.passwordValidation,
+                          onSaved: (val) => controller.password = val?.trim() ?? "",
+                          onSuffixIconTap: () => controller.updatePasswordVisibility(),
                         ),
                       ),
-                      const Spacer(),
-                      Expanded(
-                        flex: 33,
-                        child: Button(
-                          onTap: () => controller.updateSelectedUser(3),
-                          color: controller.selectedUser == 3
-                              ? AppTheme.themeColors.darkGray
-                              : AppTheme.themeColors.dimGray,
-                          title: "Hayyacom\nصاحب المناسبة",
-                          titleSize: 2.h,
-                          titleColor: controller.selectedUser == 3
-                              ? AppTheme.themeColors.base
-                              : AppTheme.themeColors.text,
+                      Visibility(
+                        visible: controller.userType == UserType.receptionist,
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 10.0),
+                          child: TextFieldWidget(
+                            prefixIcon: Icons.event,
+                            labelText: "Event Id رقم الحفله",
+                            hintText: "00",
+                            validator: FormValidation.eventValidation,
+                            onSaved: (val) => controller.eventId = val?.trim() ?? "",
+                          ),
                         ),
                       ),
                     ],
                   ),
-
-                ],
-              ),
-
-              Form(
-                key: controller.formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 10.0),
-                      child: TextFieldWidget(
-                        prefixIcon: Icons.phone_android,
-                        labelText: "Mobile Number رقم الهاتف المحمول",
-                        hintText: "0000000000",
-                        validator: FormValidation.phoneValidation,
-                        onSaved: (val) => controller.phoneNo = val?.trim() ?? "",
-                      ),
-                    ),
-
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 10.0),
-                      child: TextFieldWidget(
-                        prefixIcon: Icons.lock,
-                        suffixIcon: !controller.isPasswordVisible
-                            ? Icons.visibility_off
-                            : Icons.visibility,
-                        labelText: "Password كلمه السر",
-                        hintText: "********",
-                        obscureText: controller.isPasswordVisible,
-                        validator: FormValidation.passwordValidation,
-                        onSaved: (val) => controller.password = val?.trim() ?? "",
-                        onSuffixIconTap: () => controller.updatePasswordVisibility(),
-                      ),
-                    ),
-
-                    Visibility(
-                      visible: controller.selectedUser == 1,
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 10.0),
-                        child: TextFieldWidget(
-                          prefixIcon: Icons.event,
-                          labelText: "Event Id رقم الحفله",
-                          hintText: "00",
-                          validator: FormValidation.eventValidation,
-                          onSaved: (val) => controller.eventId = val?.trim() ?? "",
-                        ),
-                      ),
-                    ),
-                  ],
                 ),
-              ),
-
-              Button(
-                onTap: () => controller.validate(),
-                color: AppTheme.themeColors.darkGray,
-                buttonSize: 7.h,
-                title: "Login",
-                titleSize: 3.h,
-                titleColor: AppTheme.themeColors.base,
-              ),
-            ],
+                Padding(
+                  padding: EdgeInsets.only(top: 1.h),
+                  child: Button(
+                    onTap: () => controller.validate(),
+                    color: AppTheme.themeColors.inverse,
+                    buttonSize: 7.h,
+                    title: "Login",
+                    titleSize: 3.h,
+                    titleColor: AppTheme.themeColors.text,
+                  ),
+                ),
+              ],
+            ),
           ),
-        )
+
+          Container(
+            height: 60, width: 60,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(100),
+                border: Border.all(
+                    width: 1,
+                    color: AppTheme.themeColors.secondary
+                )
+            ),
+            child: CircleAvatar(
+              radius: 100,
+              backgroundImage: const AssetImage(AssetsImages.logo),
+              backgroundColor: AppTheme.themeColors.base.withOpacity(0.55),
+            ),
+          ),
+        ],
       ),
     ));
   }

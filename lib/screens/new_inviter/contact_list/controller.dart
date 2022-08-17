@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:get/get.dart';
 import 'package:hayyacom/models/event_model.dart';
-import 'package:hayyacom/repositories/events.dart';
 import 'package:hayyacom/utils/constants/navigation_params.dart';
-import 'package:hayyacom/utils/shared_preferences/index.dart';
-import 'package:hayyacom/utils/utils.dart';
 
 class ContactListingController extends GetxController {
 

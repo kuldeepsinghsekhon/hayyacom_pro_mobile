@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hayyacom/repositories/login.dart';
+import 'package:hayyacom/utils/constants/navigation_params.dart';
+import 'package:hayyacom/utils/enums/user_types.dart';
 import 'package:hayyacom/utils/utils.dart';
 
 class LoginController extends GetxController {
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  int selectedUser = 1;
   String phoneNo = "";
   String password = "";
   String eventId = "";
   bool isLoading = false;
   bool isPasswordVisible = false;
 
-  void updateSelectedUser(int user) {
-    selectedUser = user;
-    update();
+  UserType? userType;
+
+  @override
+  void onInit() {
+    super.onInit();
+    userType = Get.arguments[NavigationParams.userType];
   }
 
   void validate() {
@@ -24,7 +28,6 @@ class LoginController extends GetxController {
       formKey.currentState!.save();
       updateLoading();
       login();
-      // onDelete(CustomerModel(id: id, password: password, note: note));
     }
   }
 
@@ -44,19 +47,19 @@ class LoginController extends GetxController {
       phone: phoneNo,
       password: password,
       eventId: eventId,
-      selectedUser: selectedUser).then((value) {
+      selectedUser: userType).then((value) {
         Get.back();
         if(value.status) {
           showToast("Login Successfully");
-          navigateToInviterScreen();
+          navigateToEventScreen();
         } else {
           showToast(value.message ?? "");
         }
     });
   }
 
-  void navigateToInviterScreen() {
-    Get.toNamed(Routes.eventListing);
+  void navigateToEventScreen() {
+    Get.offAllNamed(Routes.eventListing);
   }
 
 }

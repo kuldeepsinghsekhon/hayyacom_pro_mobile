@@ -40,7 +40,6 @@ class TextFieldWidget extends StatelessWidget {
     this.onSaved,
     this.onSuffixIconTap,}) : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -58,7 +57,11 @@ class TextFieldWidget extends StatelessWidget {
         hintText: hintText,
         labelText: labelText,
         hintStyle: TextStyle(
-          color: hintTextColor ?? AppTheme.themeColors.darkGray,
+          color: hintTextColor ?? AppTheme.themeColors.text,
+        ),
+        labelStyle: TextStyle(
+          color: hintTextColor ?? AppTheme.themeColors.text,
+          fontWeight: FontWeight.bold
         ),
         suffixIcon: suffixIcon != null
           ? IconButtonWidget(
@@ -67,9 +70,25 @@ class TextFieldWidget extends StatelessWidget {
               iconColor: suffixIconColor,
               iconSize: suffixIconSize,
             ) : null,
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: AppTheme.themeColors.text),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: AppTheme.themeColors.text),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: AppTheme.themeColors.secondary),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: AppTheme.themeColors.secondary),
+          borderRadius: BorderRadius.circular(20),
+        ),
       ),
       style: TextStyle(
-        color: labelTextColor ?? AppTheme.themeColors.darkGray,
+        color: labelTextColor ?? AppTheme.themeColors.text,
       ),
 
     );

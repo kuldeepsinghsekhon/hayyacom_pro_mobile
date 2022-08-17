@@ -46,4 +46,7 @@ class PreferencesHandler {
 
   static Future<String?> getUserLanguage() => SharedPreferences.getInstance()
       .then((prefs) => prefs.getString(PreferencesKeys.userLanguage));
+
+  static Future<bool> clean() => SharedPreferences.getInstance()
+      .then((prefs) => prefs.clear());
 }

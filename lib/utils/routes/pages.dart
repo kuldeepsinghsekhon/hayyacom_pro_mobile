@@ -5,6 +5,8 @@ import 'package:hayyacom/screens/new_inviter/contact_list/binding.dart';
 import 'package:hayyacom/screens/new_inviter/contact_list/page.dart';
 import 'package:hayyacom/screens/new_inviter/event_list/binding.dart';
 import 'package:hayyacom/screens/new_inviter/event_list/page.dart';
+import 'package:hayyacom/screens/user_selection/binding.dart';
+import 'package:hayyacom/screens/user_selection/page.dart';
 
 import 'routes.dart';
 
@@ -24,6 +26,11 @@ abstract class AppPages {
       name: Routes.contactListing,
       page: () => const ContactListingView(),
       binding: ContactListingBinding(),
+    ),
+    GetPage(
+      name: Routes.userSelection,
+      page: () => const UserSelectionView(),
+      binding: UserSelectionBinding(),
     ),
   ];
 }

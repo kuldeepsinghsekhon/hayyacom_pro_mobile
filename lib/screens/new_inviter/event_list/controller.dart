@@ -44,4 +44,6 @@ class EventListingController extends GetxController {
     });
   }
 
+  void logOut() => PreferencesHandler.clean().then((value) => Get.offAllNamed(Routes.userSelection));
+
 }
