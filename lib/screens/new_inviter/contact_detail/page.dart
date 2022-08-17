@@ -5,12 +5,12 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 
 import 'controller.dart';
 
-class ContactListingView extends GetView<ContactListingController> {
-  const ContactListingView({Key? key}) : super(key: key);
+class ContactDetailView extends GetView<ContactDetailController> {
+  const ContactDetailView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ContactListingController>(builder: (_) =>
+    return GetBuilder<ContactDetailController>(builder: (_) =>
     Scaffold(
       backgroundColor: AppTheme.themeColors.base,
       appBar: AppBar(
@@ -63,8 +63,8 @@ class ContactListingView extends GetView<ContactListingController> {
                   shrinkWrap: true,
                   itemCount: controller.contacts?.length ?? 0,
                   itemBuilder: (BuildContext context, int index) => CardWidget(
-                    // onTap: () => showToast("To be implemented"),
-                    onTap: () => controller.navigateToContactDetail(controller.contacts![index]),
+                    onTap: () => showToast("To be implemented"),
+                    // onTap: () => controller.navigateToContactList(controller.contacts![index]),
                     child: ListTile(
                       leading: CircleAvatar(
                         radius: 3.h,

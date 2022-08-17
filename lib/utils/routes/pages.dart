@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:hayyacom/screens/login/binding.dart';
 import 'package:hayyacom/screens/login/page.dart';
+import 'package:hayyacom/screens/new_inviter/contact_detail/binding.dart';
+import 'package:hayyacom/screens/new_inviter/contact_detail/page.dart';
 import 'package:hayyacom/screens/new_inviter/contact_list/binding.dart';
 import 'package:hayyacom/screens/new_inviter/contact_list/page.dart';
 import 'package:hayyacom/screens/new_inviter/event_list/binding.dart';
@@ -26,6 +28,11 @@ abstract class AppPages {
       name: Routes.contactListing,
       page: () => const ContactListingView(),
       binding: ContactListingBinding(),
+    ),
+    GetPage(
+      name: Routes.contactDetail,
+      page: () => const ContactDetailView(),
+      binding: ContactDetailBinding(),
     ),
     GetPage(
       name: Routes.userSelection,
