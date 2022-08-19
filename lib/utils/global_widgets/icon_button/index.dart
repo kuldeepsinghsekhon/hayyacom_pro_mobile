@@ -22,13 +22,19 @@ class IconButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: backgroundColor ?? AppTheme.themeColors.transparent,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(20),
-        child: Icon(
-          icon,
-          color: iconColor ?? AppTheme.themeColors.text,
-          size:  iconSize ?? 25,
+        child: Padding(
+          padding: const EdgeInsets.all(3),
+          child: Icon(
+            icon,
+            color: iconColor ?? AppTheme.themeColors.text,
+            size:  iconSize ?? 25,
+          ),
         ),
       ),
     );

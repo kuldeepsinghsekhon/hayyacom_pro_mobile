@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_contacts/contact.dart';
 import 'package:get/get.dart';
 import 'package:hayyacom/utils/utils.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -6,89 +7,169 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import 'controller.dart';
 
 class ContactDetailView extends GetView<ContactDetailController> {
-  const ContactDetailView({Key? key}) : super(key: key);
+
+  final Contact contact;
+
+  const ContactDetailView({Key? key, required this.contact}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ContactDetailController>(builder: (_) =>
-    Scaffold(
-      backgroundColor: AppTheme.themeColors.base,
-      appBar: AppBar(
-        backgroundColor: AppTheme.themeColors.secondary,
-        title: TextWidget.normal(
-          text: "Send Invitation",
-          color: AppTheme.themeColors.base,
-        ),
-        actions: [
-          Visibility(
-            visible: controller.isPermissionDenied,
-            child: Padding(
-              padding: const EdgeInsets.all(15),
-              child: IconButtonWidget(
-                onTap: () => controller.fetchContacts(),
-                backgroundColor: AppTheme.themeColors.transparent,
-                icon: Icons.refresh,
-                iconColor: AppTheme.themeColors.base,
-              ),
-            ),
-          )
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => showToast("To be implemented"),
-        backgroundColor: AppTheme.themeColors.secondary,
-        child: IconButtonWidget(
-          backgroundColor: AppTheme.themeColors.transparent,
-          icon: Icons.add,
-          iconColor: AppTheme.themeColors.base,
-        ),
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.all(3.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    return GetBuilder<ContactDetailController>(
+      init: ContactDetailController(contact: contact),
+      builder: (ContactDetailController controller) => Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
             children: [
-              controller.isLoading ? const ShowInPageLoading()
-                : controller.isPermissionDenied
-                ? const EmptyListWidget(
-                    icon: Icons.settings,
-                    text: "Please provide permission")
-                : controller.contacts?.isEmpty ?? true
-                ? const EmptyListWidget(
-                    icon: Icons.person,
-                    text: "No contact available")
-                : Flexible(
-                child: ListView.separated(
-                  shrinkWrap: true,
-                  itemCount: controller.contacts?.length ?? 0,
-                  itemBuilder: (BuildContext context, int index) => CardWidget(
-                    onTap: () => showToast("To be implemented"),
-                    // onTap: () => controller.navigateToContactList(controller.contacts![index]),
-                    child: ListTile(
-                      leading: CircleAvatar(
-                        radius: 3.h,
-                        backgroundColor: AppTheme.themeColors.darkGray,
-                        child: TextWidget.bold(
-                          text: (index + 1).toString(),
-                          color: AppTheme.themeColors.base,
-                        ),
-                      ),
-                      title: TextWidget.bold(text: controller.contacts?[index].displayName ?? ""),
-                      subtitle: Column(
-                        children: controller.contacts![index].phones.map((phone) =>
-                          TextWidget.bold(text: phone.number)).toList()
-                      )
-                    ),
-                  ),
-                  separatorBuilder: (BuildContext context, int index)
-                  => SizedBox(height: 2.h,),
-                ),
-              )
+              IconButtonWidget(
+                onTap: () => Get.back(),
+                backgroundColor: AppTheme.themeColors.transparent,
+                icon: Icons.arrow_back,
+                iconSize: 24,
+                iconColor: AppTheme.themeColors.secondary,
+              ),
             ],
           ),
-        )
-      ),
-    ));
+          ///   Name
+          Padding(
+            padding: EdgeInsets.only(bottom: 0.5.h),
+            child: TextWidget.bold(
+              text: controller.contact.displayName,
+              fontSize: 2.5.h,
+            ),
+          ),
+          ///   Phone Number
+          Visibility(
+            visible: true,
+            // visible: controller.contact.phones.isNotEmpty,
+            child: Padding(
+              padding: EdgeInsets.only(bottom: 1.h),
+              child: TextWidget.normal(
+                text: "7508884086",
+                fontSize: 2.h,
+                color: AppTheme.themeColors.text,
+              ),
+            ),
+          ),
+          Divider(color: AppTheme.themeColors.secondary, height: 1,),
+          ///   Adult's
+          Padding(
+            padding: EdgeInsets.only(top: 0.8.h),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextWidget.bold(
+                  text: controller.adultCount > 1 ? "Adult's" : "Adult",
+                  fontSize: 2.5.h,
+                ),
+                Row(
+                  children: [
+                    IconButtonWidget(
+                      onTap: () => controller.updateAdultCount(isIncrement: false),
+                      backgroundColor: AppTheme.themeColors.darkGray,
+                      icon: Icons.remove,
+                      iconColor: AppTheme.themeColors.secondary,
+                      iconSize: 20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: TextWidget.bold(
+                        text: controller.adultCount.toString(),
+                        fontSize: 2.5.h,
+                      ),
+                    ),
+                    IconButtonWidget(
+                      onTap: () => controller.updateAdultCount(isIncrement: true),
+                      backgroundColor: AppTheme.themeColors.darkGray,
+                      icon: Icons.add,
+                      iconColor: AppTheme.themeColors.secondary,
+                      iconSize: 20,
+                    )
+                  ],
+                )
+              ],
+            ),
+          ),
+          ///   Children's
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 0.8.h),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextWidget.bold(
+                  text: controller.childCount > 1 ? "Children's " : "Children",
+                  fontSize: 2.5.h,
+                ),
+                Row(
+                  children: [
+                    IconButtonWidget(
+                      onTap: () => controller.updateChildCount(isIncrement: false),
+                      backgroundColor: AppTheme.themeColors.darkGray,
+                      icon: Icons.remove,
+                      iconColor: AppTheme.themeColors.secondary,
+                      iconSize: 20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: TextWidget.bold(
+                        text: controller.childCount.toString(),
+                        fontSize: 2.5.h,
+                      ),
+                    ),
+                    IconButtonWidget(
+                      onTap: () => controller.updateChildCount(isIncrement: true),
+                      backgroundColor: AppTheme.themeColors.darkGray,
+                      icon: Icons.add,
+                      iconColor: AppTheme.themeColors.secondary,
+                      iconSize: 20,
+                    )
+                  ],
+                )
+              ],
+            ),
+          ),
+          Divider(color: AppTheme.themeColors.secondary, height: 1,),
+          ///   Total Guests
+          Padding(
+            padding: EdgeInsets.only(top: 0.8.h),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextWidget.bold(
+                  text: controller.totalGuestCount > 1 ? "Total Guest's" : "Total Guest",
+                  fontSize: 2.5.h,
+                ),
+                Row(
+                  children: [
+                    const SizedBox(width: 25,),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: TextWidget.bold(
+                        text: controller.totalGuestCount.toString(),
+                        fontSize: 2.5.h,
+                      ),
+                    ),
+                    const SizedBox(width: 25,),
+                  ],
+                )
+              ],
+            ),
+          ),
+          ///   Invite button
+          Padding(
+            padding: EdgeInsets.only(top: 3.h),
+            child: Button(
+              // onTap: () => controller.validate(),
+              color: AppTheme.themeColors.inverse,
+              buttonSize: 6.5.h,
+              title: "Send Invitations",
+              titleSize: 2.5.h,
+              titleColor: AppTheme.themeColors.text,
+            ),
+          ),
+
+        ],
+      )
+    );
   }
 }
