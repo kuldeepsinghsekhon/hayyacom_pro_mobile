@@ -19,6 +19,7 @@ class CardWidget extends StatelessWidget {
     return Material(
       color: backgroundColor ?? AppTheme.themeColors.inverse,
       type: MaterialType.button,
+      elevation: 5,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),

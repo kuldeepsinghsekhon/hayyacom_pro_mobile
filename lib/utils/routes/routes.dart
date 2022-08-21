@@ -4,4 +4,5 @@ abstract class Routes {
   static const contactListing = '/contactListing';
   static const contactDetail = '/contactDetail';
   static const userSelection = '/userSelection';
+  static const invitationListing = '/invitationListing';
 }

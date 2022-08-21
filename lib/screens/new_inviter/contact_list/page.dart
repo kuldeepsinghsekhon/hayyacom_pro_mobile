@@ -12,7 +12,7 @@ class ContactListingView extends GetView<ContactListingController> {
   Widget build(BuildContext context) {
     return GetBuilder<ContactListingController>(builder: (_) =>
     Scaffold(
-      backgroundColor: AppTheme.themeColors.base,
+      backgroundColor: AppTheme.themeColors.inverse,
       appBar: AppBar(
         backgroundColor: AppTheme.themeColors.secondary,
         title: TextWidget.normal(
@@ -31,7 +31,16 @@ class ContactListingView extends GetView<ContactListingController> {
                 iconColor: AppTheme.themeColors.base,
               ),
             ),
-          )
+          ),
+          Padding(
+            padding: const EdgeInsets.all(15),
+            child: IconButtonWidget(
+              onTap: () => controller.navigateToInvitationListing(),
+              backgroundColor: AppTheme.themeColors.transparent,
+              icon: Icons.insert_invitation_outlined,
+              iconColor: AppTheme.themeColors.base,
+            ),
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -63,8 +72,8 @@ class ContactListingView extends GetView<ContactListingController> {
                   shrinkWrap: true,
                   itemCount: controller.contacts?.length ?? 0,
                   itemBuilder: (BuildContext context, int index) => CardWidget(
-                    // onTap: () => showToast("To be implemented"),
                     onTap: () => controller.navigateToContactDetail(controller.contacts![index]),
+                    backgroundColor: AppTheme.themeColors.base,
                     child: ListTile(
                       leading: CircleAvatar(
                         radius: 3.h,
@@ -76,8 +85,13 @@ class ContactListingView extends GetView<ContactListingController> {
                       ),
                       title: TextWidget.bold(text: controller.contacts?[index].displayName ?? ""),
                       subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: controller.contacts![index].phones.map((phone) =>
-                          TextWidget.bold(text: phone.number)).toList()
+                          TextWidget.normal(
+                            text: phone.number,
+                            color: AppTheme.themeColors.text,
+                            fontSize: 12,
+                          )).toList()
                       )
                     ),
                   ),

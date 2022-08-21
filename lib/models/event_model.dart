@@ -1,3 +1,5 @@
+import 'messagem_model.dart';
+
 class EventModel {
 /*
 {
@@ -24,6 +26,7 @@ class EventModel {
   String? eventTitle;
   String? notes;
   int? designId;
+  MessageModel? messages;
 
   EventModel({
     this.id,
@@ -36,6 +39,7 @@ class EventModel {
     this.eventTitle,
     this.notes,
     this.designId,
+    this.messages,
   });
 
   EventModel.fromJson(Map<String, dynamic> json) {
@@ -49,6 +53,7 @@ class EventModel {
     eventTitle = json['eventtitle']?.toString();
     notes = json['notes']?.toString();
     designId = int.tryParse(json['DesignId']?.toString() ?? '');
+    messages = (json['messages'] != null && (json['messages'] is Map)) ? MessageModel.fromJson(json['messages']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -63,6 +68,9 @@ class EventModel {
     data['eventtitle'] = eventTitle;
     data['notes'] = notes;
     data['DesignId'] = designId;
+    if (messages != null) {
+      data['messages'] = messages!.toJson();
+    }
     return data;
   }
 }

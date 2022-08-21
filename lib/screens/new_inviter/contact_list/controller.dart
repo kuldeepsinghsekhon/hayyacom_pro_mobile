@@ -29,15 +29,20 @@ class ContactListingController extends GetxController {
     if (!await FlutterContacts.requestPermission(readonly: true)) {
       isPermissionDenied = true;
     } else {
-      contacts = await FlutterContacts.getContacts();
+      contacts = await FlutterContacts.getContacts(withProperties: true, withPhoto: true);
     }
     isLoading = false;
     update();
   }
 
   void navigateToContactDetail(Contact contact) {
-    GeneralDialog.show(child: ContactDetailView(contact: contact));
-    // Get.toNamed(Routes.contactDetail, arguments: {NavigationParams.contactModel: contact});
+    GeneralDialog.show(child: ContactDetailView(contact: contact, event: eventModel!));
+  }
+
+  void navigateToInvitationListing() {
+    Get.toNamed(Routes.invitationListing, arguments: {
+      NavigationParams.eventId: eventModel?.id
+    });
   }
 
 }

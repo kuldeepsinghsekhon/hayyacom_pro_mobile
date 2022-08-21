@@ -18,7 +18,7 @@ class GeneralDialog {
               margin: const EdgeInsets.only(top: 30),
               padding: EdgeInsets.all(3.w),
               decoration: BoxDecoration(
-                  color: AppTheme.themeColors.base.withOpacity(0.55),
+                  color: AppTheme.themeColors.base,
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(
                       width: 1,

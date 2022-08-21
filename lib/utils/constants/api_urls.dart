@@ -9,4 +9,7 @@ class APIUrls {
   static String oldLoginApi =  "$oldAppBaseURL/api/login";
   static String newLoginApi =  "$newAppBaseURL/auth/login";
   static eventListApi(int id) => "$newAppBaseURL/events/user/$id";
+  static String createSingleInvitationApi =  "$newAppBaseURL/invitations/create/single";
+  static String createSingleContactApi =  "$newAppBaseURL/contacts/create/single";
+  static invitationListApi(int userId, int eventId) => "$newAppBaseURL/invitations/all/$userId/$eventId";
 }
